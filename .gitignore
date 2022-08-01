@@ -1,0 +1,25 @@
+.idea/
+
+# dotenv
+.env
+
+# data
+.data/
+
+# runs
+.runs/
+
+.thrash/
+
+# arithmeticcoder file
+*.code
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
