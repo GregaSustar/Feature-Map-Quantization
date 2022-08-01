@@ -1,0 +1,39 @@
+qbins = 2
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 3
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 4
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 6
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 8
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 12
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 16
+    Acc@1
+    Acc@5
+    Loss
+
+qbins = 32
+    Acc@1
+    Acc@5
+    Loss

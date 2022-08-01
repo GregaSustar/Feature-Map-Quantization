@@ -1,15 +1,15 @@
 .idea/
 
 # dotenv
-.env
+env
 
 # data
-.data/
+data/
 
 # runs
-.runs/
+runs/
 
-.thrash/
+thrash/
 
 # arithmeticcoder file
 *.code
