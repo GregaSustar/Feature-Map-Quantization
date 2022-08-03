@@ -7,10 +7,6 @@ import scaling
 from newresnet import resnet101_blockn_split
 
 
-# var = 0.0006968038505874574
-# std = 0.02639690414071083
-
-
 class QuantResNet(nn.Module):
     """
     Full quantized resnet101 architecture
@@ -102,15 +98,7 @@ class QuantResNet(nn.Module):
 
     def _forward_train(self, x):
         x = self.edgepass(x)
-        x = self.scale(x)
-        if self.compander:
-            x = self.compress(x)
-
-        x = _generate_noise(x, self.quantizer.qbins)
-
-        if self.compander:
-            x = self.expand(x)
-        x = self.unscale(x)
+        x = _generate_noise(x)
         x = self.cloudpass(x)
         return x
 
@@ -143,13 +131,9 @@ class QuantResNet(nn.Module):
 
 
 
-def _generate_noise(t: Tensor, qbins: int):
-    # r = 1 / qbins
+def _generate_noise(t: Tensor):
     r = 1 / 2
     noise = (r + r) * torch.rand_like(t) - r
-    # noise = scaling.rescale(torch.rand_like(t), (-r, r))
-    # print(-r, r)
-    # print(noise)
     return t + noise
 
 
@@ -157,4 +141,4 @@ def _generate_noise(t: Tensor, qbins: int):
 if __name__ == "__main__":
     h = torch.tensor([[0.1, 0.2, 0.3, 0.4, 0.5],
                      [0.6, 0.7, 0.8, 0.9, 1.0]])
-    print(_generate_noise(h, 4))
+    print(_generate_noise(h))

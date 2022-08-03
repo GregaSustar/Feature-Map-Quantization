@@ -288,16 +288,11 @@ def main_worker(args):
                                 nesterov=True)
 
 
-    # scheduler = torch.optim.lr_scheduler.ConstantLR(optimizer, 1.0, 0)
-    # scheduler = lr_scheduler.OneCycleLR(optimizer,
-    #                                     max_lr=0.01,
-    #                                     epochs=args.epochs,
-    #                                     steps_per_epoch=len(train_loader))
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
         optimizer=optimizer,
         mode="min",
         factor=0.1,
-        patience=10
+        patience=15,
     )
     # scheduler = torch.optim.lr_scheduler.MultiStepLR(
     #     optimizer=optimizer,
