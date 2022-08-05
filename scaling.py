@@ -7,10 +7,12 @@ class Scaler:
 
     def __init__(self):
         self.stats = deque()
+        self.nstats = deque()
 
 
     def reset(self):
         self.stats.clear()
+        self.nstats.clear()
 
 
     def scale(self, t: Tensor, interval: Tuple[float, float]):
@@ -20,6 +22,18 @@ class Scaler:
 
     def unscale(self, t: Tensor):
         return rescale(t, self.stats.pop())
+
+
+    def normalize(self, t: Tensor):
+        _mean = torch.mean(t).item()
+        _std = torch.std(t, unbiased=False).item()
+        self.nstats.appendleft((_mean, _std))
+        return (t - _mean) / _std
+
+
+    def denormalize(self, t: Tensor):
+        _mean, _std = self.nstats.pop()
+        return t * _std + _mean
 
 
 
@@ -42,16 +56,6 @@ def rescale(t: Tensor, interval: Tuple[float, float]):
     return t
 
 
-def normalize(t: Tensor):
-    """
-    Args:
-        t (Tensor): Input tensor
-    Returns:
-        Tensor: Input after rescaling values to interval [0,1]
-    """
-    return rescale(t, (0., 1.))
-
-
 if __name__ == "__main__":
 
     x = torch.tensor([-0.124, -1.456, -0.003, 0.0001, 0.496, 1.446, 5.01033])
@@ -60,5 +64,4 @@ if __name__ == "__main__":
 
     print(rescale(x, (-1, 1)))
     print(rescale(x, (amin, amax)))
-    print(normalize(x))
     print(rescale(x, (amin, amax)))

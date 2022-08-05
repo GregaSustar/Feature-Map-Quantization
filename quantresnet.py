@@ -43,6 +43,8 @@ class QuantResNet(nn.Module):
     def scale(self, x: Tensor):
         out = []
         for s in x:
+            if self.compander:
+                s = self.scaler.normalize(s)
             s = self.scaler.scale(s, (-1., 1.))
             out.append(s)
         out = torch.stack(out)
@@ -52,6 +54,8 @@ class QuantResNet(nn.Module):
     def unscale(self, x: Tensor):
         out = []
         for s in x:
+            if self.compander:
+                s = self.scaler.denormalize(s)
             s = self.scaler.unscale(s)
             out.append(s)
         out = torch.stack(out)

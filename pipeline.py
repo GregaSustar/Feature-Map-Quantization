@@ -141,9 +141,9 @@ if __name__ == "__main__":
 
             # show before and after image
             if show_flag:
-                show(inputs[10], args.split)
-                show(qnet.edgepass(inputs)[10], args.split)
-                show(outputs[10], args.split, True)
+                show(inputs[0], args.split)
+                show(qnet.edgepass(inputs)[0], args.split)
+                show(outputs[0], args.split, True)
                 show_flag = False
 
             # measure bpp and cr
