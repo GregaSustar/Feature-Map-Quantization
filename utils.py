@@ -53,26 +53,31 @@ def get_lr(optimizer):
 
 
 
-def show(t: Tensor, split: int, q: bool = False):
-    t = t.detach().cpu().numpy()
+def show(t: Tensor, q: bool = False):
+    _t = t.detach().cpu().numpy()
     plt.figure(figsize=(20, 20))
 
-    if t.shape[0] < 4:
-        plt.imshow(t.T)
+    if _t.shape[0] < 4:
+        # Denormalize
+        mean = np.array([0.485, 0.456, 0.406])
+        std = np.array([0.229, 0.224, 0.225])
+        _t = _t * std[:, None, None] + mean[:, None, None]
+
+        plt.imshow(np.rot90(_t.T, 3))
         plt.axis("off")
-        plt.savefig(f"results/split[{split}]_original_image.png")
+        plt.savefig(f"results/anon/image.png")
         plt.close()
         return
 
-    for i, f in enumerate(t):
+    for i, f in enumerate(_t):
         if i == 64:  # we will visualize only 8x8 blocks from each layer
             break
         plt.subplot(8, 8, i + 1)
-        plt.imshow(f.T, cmap='gray')
+        plt.imshow(np.rot90(f.T, 3), cmap='gray')
         plt.axis("off")
 
     if q:
-        plt.savefig(f"results/split[{split}]_quant_featmaps.png")
+        plt.savefig(f"results/anon/qfeatmaps.png")
     else:
-        plt.savefig(f"results/split[{split}]_featmaps.png")
+        plt.savefig(f"results/anon/featmaps.png")
     plt.close()

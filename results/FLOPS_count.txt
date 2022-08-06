@@ -1,0 +1,21 @@
+ResNet101 (Full) - Computational complexity for Imagenet
+--------------------------------------------------
+Computational complexity:       7.85 GMac
+Number of parameters:           44.55 M 
+
+
+
+ResNet101 (Edge) - Computational complexity for Imagenet
+--------------------------------------------------
+Computational complexity:       357.65 MMac
+Number of parameters:           84.54 k 
+
+
+
+ResNet101 (Cloud) - Computational complexity for Imagenet
+--------------------------------------------------
+Computational complexity:       7.49 GMac
+Number of parameters:           42.44 M 
+
+
+

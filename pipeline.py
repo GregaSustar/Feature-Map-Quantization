@@ -13,7 +13,6 @@ from progressmeter import Summary, ProgressMeter, AverageMeter
 from train import cif10_transfroms, cif100_transfroms, imgnet_transfroms
 
 
-
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Eval settings')
@@ -141,10 +140,11 @@ if __name__ == "__main__":
 
             # show before and after image
             if show_flag:
-                show(inputs[0], args.split)
-                show(qnet.edgepass(inputs)[0], args.split)
-                show(outputs[0], args.split, True)
-                show_flag = False
+                if i == 98:
+                    show(inputs[7])
+                    show(qnet.edgepass(inputs)[7])
+                    show(outputs[7], True)
+                    show_flag = False
 
             # measure bpp and cr
             #_bpp = bpp(bitsize(coder.outputfile), res) / inputs.size(0)
