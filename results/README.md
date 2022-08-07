@@ -15,40 +15,43 @@
 
 **Dataset**: CIFAR100<br>
 **Model**: QuantResNet101 trained *WITHOUT* noise
-
 ![cif100_split_wo_noise](../results/graphs/cif100_wo_noise.png)
 
 <br>
 
 **Dataset**: CIFAR100<br>
 **Model**: QuantResNet101 trained *WITH* noise
-
 ![cif100_split_w_noise](../results/graphs/cif100_w_noise.png)
 
 <br>
 
 **Dataset**: Imagenette<br>
 **Model**: QuantResNet101 trained *WITHOUT* noise
-
 ![imgnette_split_wo_noise](../results/graphs/imgnette_wo_noise.png)
 
 <br>
 
 **Dataset**: Imagenette<br>
 **Model**: QuantResNet101 trained *WITH* noise
-
 ![imgnette_split_w_noise](../results/graphs/imgnette_w_noise.png)
 
 <br>
 
-### *NOISE* vs *NO NOISE* training on Imagenette
+### *NOISE* vs *NO NOISE* training
+
+**Imagenette**
 
 ![noise_vs_nonoise](../results/graphs/noise_vs_nonoise_imgnette.png)
 
 <br>
 
-### *Uniform* vs *Non-uniform* quantization
+**CIFAR100**
 
+![noise_vs_nonoise](../results/graphs/noise_vs_nonoise_cif100.png)
+
+<br>
+
+### *Uniform* vs *Non-uniform* quantization
 ![companding](../results/graphs/companding_compare.png)
 
 <br>
@@ -91,9 +94,30 @@ There are no significant differences between the green and red line as one would
 | *QuantResNet (Cloud)* | 14.98  |  7.49   |
 
 
-### Compression
+## Compression
 
-### Anonimization
+> **_NOTE:_** All measurements were made with split@1 on 1500 images from the coressponding dataset.
+> I also used the model trained with noise. Whether there is a difference in bpp and CR if I used the model
+> trained without noise is unknown, but is suspect there isn't.
+
+**Imagenette**
+
+| qbins | bpp  |  CR  |
+|:-----:|:----:|:----:|
+|  *4*  | 6.36 | 4.07 |
+|  *6*  |      |      |
+|  *8*  |      |      |
+
+
+**CIFAR100**
+
+| qbins |  bpp  |  CR   |
+|:-----:|:-----:|:-----:|
+|  *4*  |       |       |
+|  *6*  |       |       |
+|  *8*  |       |       |
+
+## Anonimization
 
 |         Original image         |           Feature maps            | Quantized Feature maps                           |
 |:------------------------------:|:---------------------------------:|--------------------------------------------------|
