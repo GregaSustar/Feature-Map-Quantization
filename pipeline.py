@@ -2,6 +2,7 @@ import os
 import torch
 import argparse
 import torchvision
+import time
 
 from companding import Compander
 from quantization import Quantizer
@@ -111,6 +112,7 @@ if __name__ == "__main__":
     qnet.eval()
     qnet.to(device)
 
+    batch_time = AverageMeter('Time', ':6.3f')
     losses = AverageMeter('Loss', ':.4e', Summary.AVERAGE)
     top1 = AverageMeter('Acc@1', ':6.2f', Summary.AVERAGE)
     top5 = AverageMeter('Acc@5', ':6.2f', Summary.AVERAGE)
@@ -118,11 +120,12 @@ if __name__ == "__main__":
     cratio = AverageMeter('CR', ':6.2f', Summary.AVERAGE)
     progress = ProgressMeter(
         len(val_loader),
-        [top1, top5, bitppx, cratio],
+        [batch_time, top1, top5, bitppx, cratio],
         prefix="Val: [-]")
 
 
     show_flag = args.show
+    end = time.time()
 
     for i, (inputs, labels) in enumerate(val_loader):
         inputs = inputs.to(device)
@@ -136,7 +139,7 @@ if __name__ == "__main__":
 
             outputs = qnet.analysis(inputs)
             # Encode with arithmetic codin
-            #coder.encode(outputs)
+            coder.encode(outputs)
 
             # show before and after image
             if show_flag:
@@ -147,11 +150,11 @@ if __name__ == "__main__":
                     show_flag = False
 
             # measure bpp and cr
-            #_bpp = bpp(bitsize(coder.outputfile), res) / inputs.size(0)
-            #cr = CR(_bpp)
+            _bpp = bpp(bitsize(coder.outputfile), res) / inputs.size(0)
+            cr = CR(_bpp)
 
             # Decode compressed file
-            #outputs = coder.decode()
+            outputs = coder.decode()
             # Process decoded tensor with second half of ResNet
             outputs = qnet.synthesis(outputs)
 
@@ -160,10 +163,12 @@ if __name__ == "__main__":
 
             top1.update(acc1[0], inputs.size(0))
             top5.update(acc5[0], inputs.size(0))
-            #bitppx.update(_bpp, inputs.size(0))
-            #cratio.update(cr, inputs.size(0))
+            bitppx.update(_bpp, inputs.size(0))
+            cratio.update(cr, inputs.size(0))
 
             # measure elapsed time
+            batch_time.update(time.time() - end)
+            end = time.time()
 
             if i % args.print_freq == 0:
                 progress.display(i + 1)

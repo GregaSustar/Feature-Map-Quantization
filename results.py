@@ -184,6 +184,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -197,6 +200,9 @@ if __name__ == "__main__":
                   label='baseline')
 
     ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
@@ -220,6 +226,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -233,6 +242,9 @@ if __name__ == "__main__":
                   label='baseline')
 
     ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
@@ -256,6 +268,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -269,6 +284,9 @@ if __name__ == "__main__":
                   label='baseline')
 
     ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
@@ -291,6 +309,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -304,6 +325,9 @@ if __name__ == "__main__":
                   label='baseline')
 
     ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
@@ -327,6 +351,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -340,6 +367,9 @@ if __name__ == "__main__":
                   label='baseline')
 
     ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
@@ -362,6 +392,9 @@ if __name__ == "__main__":
 
     ax[0].legend(loc=4, fontsize=12)
 
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
     ax[0].set_ylim(top=100)
     ax[0].set_title("Acc@1", fontsize=14)
 
@@ -375,6 +408,9 @@ if __name__ == "__main__":
 
     ax[1].legend(loc=4, fontsize=12)
 
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
+
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
 
@@ -382,11 +418,51 @@ if __name__ == "__main__":
     plt.savefig("results/graphs/companding_compare")
     plt.show()
 
+
+    _, ax = plt.subplots(2, 1, figsize=(8, 8))
+
+    ax[0].set_xticks(np.arange(min(_QBINS), max(_QBINS) + 1, 2))
+    ax[0].set_yticks(np.arange(0, 101, 10))
+
+    ax[0].plot(_QBINS, a1s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='w/o noise')
+    ax[0].plot(_QBINS, a1s_s1_noise_imgnette, color='seagreen', linewidth='1', label='w/ noise')
+    ax[0].axhline(y=_BASELINE_ACC1_IMAGENETTE, xmin=0.03, xmax=0.97, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+
+    ax[0].legend(loc=4, fontsize=12)
+
+    ax[0].set_xlabel("# quantization bins")
+    ax[0].set_ylabel("Accuracy")
+
+    ax[0].set_ylim(top=100)
+    ax[0].set_title("Acc@1", fontsize=14)
+
+    ax[1].set_xticks(np.arange(min(_QBINS), max(_QBINS) + 1, 2))
+    ax[1].set_yticks(np.arange(0, 101, 10))
+
+    ax[1].plot(_QBINS, a5s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='w/o noise')
+    ax[1].plot(_QBINS, a5s_s1_noise_imgnette, color='seagreen', linewidth='1', label='w/ noise')
+    ax[1].axhline(y=_BASELINE_ACC5_IMAGENETTE, xmin=0.03, xmax=0.97, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+
+    ax[1].legend(loc=4, fontsize=12)
+
+    ax[1].set_xlabel("# quantization bins")
+    ax[1].set_ylabel("Accuracy")
+
+    ax[1].set_ylim(top=100)
+    ax[1].set_title("Acc@5", fontsize=14)
+
+    plt.tight_layout()
+    plt.savefig("results/graphs/noise_vs_nonoise_imgnette")
+    plt.show()
+
+
     # FLOPS
 
     original_stdout = sys.stdout  # Save a reference to the original standard output
 
-    with open('results/FLOPS_count.txt', 'w') as f:
+    with open('results/FLOPs_count.txt', 'w') as f:
         sys.stdout = f  # Change the standard output to the file we created.
         with torch.cuda.device(0):
             net = models.resnet101()
