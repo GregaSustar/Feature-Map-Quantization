@@ -40,13 +40,11 @@
 ### *NOISE* vs *NO NOISE* training
 
 **Imagenette**
-
 ![noise_vs_nonoise](../results/graphs/noise_vs_nonoise_imgnette.png)
 
 <br>
 
 **CIFAR100**
-
 ![noise_vs_nonoise](../results/graphs/noise_vs_nonoise_cif100.png)
 
 <br>
@@ -102,20 +100,20 @@ There are no significant differences between the green and red line as one would
 
 **Imagenette**
 
-| qbins | bpp  |  CR  |
-|:-----:|:----:|:----:|
-|  *4*  | 6.36 | 4.07 |
-|  *6*  |      |      |
-|  *8*  |      |      |
+| qbins |  bpp  |  CR  |
+|:-----:|:-----:|:----:|
+|  *4*  | 6.36  | 4.07 |
+|  *6*  | 12.53 | 1.97 |
+|  *8*  | 16.82 | 1.45 |
 
 
 **CIFAR100**
 
-| qbins |  bpp  |  CR   |
-|:-----:|:-----:|:-----:|
-|  *4*  |       |       |
-|  *6*  |       |       |
-|  *8*  |       |       |
+| qbins |  bpp  |  CR  |
+|:-----:|:-----:|:----:|
+|  *4*  | 85.81 | 0.29 |
+|  *6*  |   -   |  -   |
+|  *8*  |   -   |  -   |
 
 ## Anonimization
 
