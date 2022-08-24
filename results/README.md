@@ -71,25 +71,21 @@ There are no significant differences between the green and red line as one would
 
 ## Computational complexity
 
-**GMACS** ... Giga Multiply–accumulate operations **per second**<br>
 **GFLOPS** ... Giga Floating point operations **per second**<br>
-**GMACs** ... Giga Multiply–accumulate operations<br>
 **GFLOPs** ... Giga Floating point operations<br>
 
 
-<sub><i>GMACs ~ GFLOPs * 0.5</i></sub>
+| Device                  | GFLOPS |
+|-------------------------|:------:|
+| *Raspberry Pi-4B*       |  9.69  |
+| *Raspberry Pi Zero 2 W* |  5.10  |
+| *NVIDIA A100*           | 19 500 |
 
-| Device                  | GFLOPS | GMACS |
-|-------------------------|:------:|:-----:|
-| *Raspberry Pi-4B*       |  9.69  | 4.85  |
-| *Raspberry Pi Zero 2 W* |  5.10  | 2.55  |
-| *NVIDIA A100*           | 19 500 | 9 750 |
-
-| CNN                   | GFLOPs |  GMACs  |
-|-----------------------|:------:|:-------:|
-| *ResNet101*           |  15.7  |  7.85   |
-| *QuantResNet (Edge)*  |  0.75  |  0.375  |
-| *QuantResNet (Cloud)* | 14.98  |  7.49   |
+| CNN                   | GFLOPs  |
+|-----------------------|:-------:|
+| *ResNet101*           |  7.85   |
+| *QuantResNet (Edge)*  |  0.375  |
+| *QuantResNet (Cloud)* |  7.49   |
 
 
 ## Compression
