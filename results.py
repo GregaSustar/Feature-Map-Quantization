@@ -6,6 +6,9 @@ from ptflops import get_model_complexity_info
 from newresnet import resnet101_blockn_split
 import sys
 
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+
 
 _BASELINE_ACC1_CIFAR100 = 78.820
 _BASELINE_ACC5_CIFAR100 = 94.560
@@ -207,6 +210,30 @@ if __name__ == "__main__":
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
 
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_noise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s2_noise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a1s_s3_noise_cif, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC1_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(55, 80)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_noise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s2_noise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a5s_s3_noise_cif, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC5_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(75, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
     plt.tight_layout()
     plt.savefig("results/graphs/cif100_w_noise")
     plt.show()
@@ -248,6 +275,30 @@ if __name__ == "__main__":
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
+
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_nonoise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s2_nonoise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a1s_s3_nonoise_cif, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC1_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(55, 80)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_nonoise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s2_nonoise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a5s_s3_nonoise_cif, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC5_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(75, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
 
     plt.tight_layout()
     plt.savefig("results/graphs/cif100_wo_noise")
@@ -291,6 +342,30 @@ if __name__ == "__main__":
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
 
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_noise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s2_noise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a1s_s3_noise_imgnette, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC1_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(60, 95)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_noise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s2_noise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a5s_s3_noise_imgnette, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC5_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(80, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
     plt.tight_layout()
     plt.savefig("results/graphs/imgnette_w_noise")
     plt.show()
@@ -331,6 +406,30 @@ if __name__ == "__main__":
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
+
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s2_nonoise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a1s_s3_nonoise_imgnette, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC1_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(60, 95)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s2_nonoise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.plot(_QBINS, a5s_s3_nonoise_imgnette, color='firebrick', linewidth='1', label='split@3')
+    axins.axhline(y=_BASELINE_ACC5_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+               label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(80, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
 
     plt.tight_layout()
     plt.savefig("results/graphs/imgnette_wo_noise")
@@ -454,6 +553,28 @@ if __name__ == "__main__":
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
 
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s1_noise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.axhline(y=_BASELINE_ACC1_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(60, 95)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_nonoise_imgnette, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s1_noise_imgnette, color='seagreen', linewidth='1', label='split@2')
+    axins.axhline(y=_BASELINE_ACC5_IMAGENETTE, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(80, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
     plt.tight_layout()
     plt.savefig("results/graphs/noise_vs_nonoise_imgnette")
     plt.show()
@@ -493,6 +614,28 @@ if __name__ == "__main__":
 
     ax[1].set_ylim(top=100)
     ax[1].set_title("Acc@5", fontsize=14)
+
+    axins = zoomed_inset_axes(ax[0], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a1s_s1_nonoise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a1s_s1_noise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.axhline(y=_BASELINE_ACC1_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(55, 80)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[0], axins, loc1=3, loc2=1, fc="none", ec="0.5")
+
+    axins = zoomed_inset_axes(ax[1], 2, loc=8)  # zoom = 2
+    axins.plot(_QBINS, a5s_s1_nonoise_cif, color='royalblue', linewidth='1', label='split@1')
+    axins.plot(_QBINS, a5s_s1_noise_cif, color='seagreen', linewidth='1', label='split@2')
+    axins.axhline(y=_BASELINE_ACC5_CIFAR100, color='k', linestyle='--', linewidth='1',
+                  label='baseline')
+    axins.set_xlim(2, 10)
+    axins.set_ylim(75, 100)
+    axins.set_xticklabels([])
+    axins.set_yticklabels([])
+    mark_inset(ax[1], axins, loc1=3, loc2=1, fc="none", ec="0.5")
 
     plt.tight_layout()
     plt.savefig("results/graphs/noise_vs_nonoise_cif100")

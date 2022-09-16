@@ -2,6 +2,7 @@ import os.path
 from typing import Tuple
 import torch
 from torch import Tensor
+import numpy as np
 
 def accuracy(output, target, topk=(1,)):
     """
@@ -34,6 +35,12 @@ def bytesize(inp: Tensor | str):
 
     if isinstance(inp, Tensor):
         return inp.element_size() * inp.nelement()
+
+    if isinstance(inp, bytes):
+        return len(inp)
+
+    if isinstance(inp, np.ndarray):
+        return inp.nbytes
 
     if isinstance(inp, str):
         if os.path.exists(inp):

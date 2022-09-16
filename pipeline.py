@@ -3,7 +3,11 @@ import torch
 import argparse
 import torchvision
 import time
+import cv2
+import numpy as np
+import zlib
 
+import scaling
 from companding import Compander
 from quantization import Quantizer
 from quantresnet import QuantResNet
@@ -105,7 +109,7 @@ if __name__ == "__main__":
             print("=> Loaded checkpoint '{}' (epoch {})"
                   .format(args.load, checkpoint['epoch']))
         else:
-            print("=> No checkpoint found at '{}'...".format(args.resume))
+            print("=> No checkpoint found at '{}'...".format(args.load))
 
 
     # Start pipline
@@ -136,10 +140,24 @@ if __name__ == "__main__":
         with torch.no_grad():
 
             # Process input with first part of ResNet
-
-            outputs = qnet.analysis(inputs)
+            # outputs = qnet.analysis(inputs)
             # Encode with arithmetic codin
-            coder.encode(outputs)
+
+            # outputs = outputs.cpu().detach().numpy()
+            # shp = outputs.shape
+            # outputs = zlib.compress(outputs)
+
+            #coder.encode(outputs)
+
+            s = scaling.Scaler()
+            outputs = s.scale(inputs, (0, 255))
+            outputs = outputs.cpu().detach().numpy()
+            outputs = np.squeeze(outputs, axis=0)
+            outputs = np.moveaxis(outputs, 0, -1)
+            cv2.imwrite("out.jpeg", outputs, [cv2.IMWRITE_JPEG_QUALITY, 90])
+            outputs = cv2.imread("out.jpeg")
+            _, outputs = cv2.imencode(".jpeg", outputs, [cv2.IMWRITE_JPEG_QUALITY, 90])
+
 
             # show before and after image
             if show_flag:
@@ -150,12 +168,26 @@ if __name__ == "__main__":
                     show_flag = False
 
             # measure bpp and cr
-            _bpp = bpp(bitsize(coder.outputfile), res) / inputs.size(0)
+            # _bpp = bpp(bitsize(coder.outputfile), res) / inputs.size(0)
+            _bpp = bpp(bitsize(outputs), res) / inputs.size(0)
             cr = CR(_bpp)
 
             # Decode compressed file
-            outputs = coder.decode()
+            # outputs = zlib.decompress(outputs)
+            # outputs = np.frombuffer(outputs, dtype=np.uint8)
+            # outputs = outputs.reshape(shp)
+            # outputs = torch.from_numpy(outputs).to(device)
+
+            #outputs = coder.decode()
+
+            outputs = cv2.imdecode(outputs, cv2.IMREAD_COLOR).astype(np.float32)
+            outputs = np.moveaxis(outputs, -1, 0)
+            outputs = np.expand_dims(outputs, axis=0)
+            outputs = torch.from_numpy(outputs).to(device)
+            outputs = s.unscale(outputs)
+
             # Process decoded tensor with second half of ResNet
+            outputs = qnet.analysis(outputs)
             outputs = qnet.synthesis(outputs)
 
             # measure accuracy
